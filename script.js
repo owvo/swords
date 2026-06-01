@@ -1,194 +1,106 @@
-const images = [
-    {
-        file: "images/1.png",
-        title: "Image 1",
-        text: "Write anything you want here."
-    },
-    {
-        file: "images/2.png",
-        title: "Image 2",
-        text: "Description for image 2."
-    },
-    {
-        file: "images/3.png",
-        title: "Image 3",
-        text: "Description for image 3."
-    },
-    {
-        file: "images/4.png",
-        title: "Image 4",
-        text: "Description for image 4."
-    },
-    {
-        file: "images/5.png",
-        title: "Image 5",
-        text: "Description for image 5."
-    },
-    {
-        file: "images/6.png",
-        title: "Image 6",
-        text: "Description for image 6."
-    },
-    {
-        file: "images/7.png",
-        title: "Image 7",
-        text: "Description for image 7."
-    },
-    {
-        file: "images/8.png",
-        title: "Image 8",
-        text: "Description for image 8."
-    },
-    {
-        file: "images/9.png",
-        title: "Image 9",
-        text: "Description for image 9."
-    },
-    {
-        file: "images/10.png",
-        title: "Image 10",
-        text: "Description for image 10."
-    },
-    {
-        file: "images/11.png",
-        title: "Image 11",
-        text: "Description for image 11."
-    },
-    {
-        file: "images/12.png",
-        title: "Image 12",
-        text: "Description for image 12."
-    },
-    {
-        file: "images/13.png",
-        title: "Image 13",
-        text: "Description for image 13."
-    },
-    {
-        file: "images/14.png",
-        title: "Image 14",
-        text: "Description for image 14."
-    },
-    {
-        file: "images/15.png",
-        title: "Image 15",
-        text: "Description for image 15."
-    },
-    {
-        file: "images/16.png",
-        title: "Image 16",
-        text: "Description for image 16."
-    },
-    {
-        file: "images/17.png",
-        title: "Image 17",
-        text: "Description for image 17."
-    },
-    {
-        file: "images/18.png",
-        title: "Image 18",
-        text: "Description for image 18."
-    },
-    {
-        file: "images/19.png",
-        title: "Image 19",
-        text: "Description for image 19."
-    },
-    {
-        file: "images/20.png",
-        title: "Image 20",
-        text: "Description for image 20."
-    },
-    {
-        file: "images/21.png",
-        title: "Image 21",
-        text: "Description for image 21."
-    },
-    {
-        file: "images/22.png",
-        title: "Image 22",
-        text: "Description for image 22."
-    },
-    {
-        file: "images/23.png",
-        title: "Image 23",
-        text: "Description for image 23."
-    },
-    {
-        file: "images/24.png",
-        title: "Image 24",
-        text: "Description for image 24."
-    },
-    {
-        file: "images/25.png",
-        title: "Image 25",
-        text: "Description for image 25."
-    },
-    {
-        file: "images/26.png",
-        title: "Image 26",
-        text: "Description for image 26."
-    },
-    {
-        file: "images/27.png",
-        title: "Image 27",
-        text: "Description for image 27."
-    },
-    {
-        file: "images/28.png",
-        title: "Image 28",
-        text: "Description for image 28."
-    },
-    {
-        file: "images/29.png",
-        title: "Image 29",
-        text: "Description for image 29."
-    },
-    {
-        file: "images/30.png",
-        title: "Image 30",
-        text: "Description for image 30."
-    },
-    {
-        file: "images/31.png",
-        title: "Image 31",
-        text: "Description for image 31."
-    },
-    {
-        file: "images/32.png",
-        title: "Image 32",
-        text: "Description for image 32."
-    }
-];
-
 const gallery = document.getElementById("gallery");
-const galleryView = document.getElementById("gallery-view");
-const detailView = document.getElementById("detail-view");
+const viewer = document.getElementById("viewer");
+const viewerImage = document.getElementById("viewer-image");
+const textContent = document.getElementById("text-content");
+const closeBtn = document.getElementById("close");
 
-const detailImage = document.getElementById("detail-image");
-const detailTitle = document.getElementById("detail-title");
-const detailText = document.getElementById("detail-text");
+/*
+    Write your text here.
+    Key = image number
+*/
 
-images.forEach(item => {
+const descriptions = {
+    1: "Text for image 1",
+    2: "Text for image 2",
+    3: "Text for image 3",
+    4: "Text for image 4",
+    5: "Text for image 5",
+    6: "Text for image 6",
+    7: "Text for image 7",
+    8: "Text for image 8",
+    9: "Text for image 9",
+    10: "Text for image 10",
+    11: "Text for image 11",
+    12: "Text for image 12",
+    13: "Text for image 13",
+    14: "Text for image 14",
+    15: "Text for image 15",
+    16: "Text for image 16",
+    17: "Text for image 17",
+    18: "Text for image 18",
+    19: "Text for image 19",
+    20: "Text for image 20",
+    21: "Text for image 21",
+    22: "Text for image 22",
+    23: "Text for image 23",
+    24: "Text for image 24",
+    25: "Text for image 25",
+    26: "Text for image 26",
+    27: "Text for image 27",
+    28: "Text for image 28",
+    29: "Text for image 29",
+    30: "Text for image 30",
+    31: "Text for image 31",
+    32: "Text for image 32"
+};
+
+for (let i = 1; i <= 32; i++) {
     const img = document.createElement("img");
 
-    img.src = item.file;
-    img.className = "thumbnail";
-    img.alt = item.title;
+    img.src = `images/${i}.png`;
+    img.className = "thumb";
 
-    img.addEventListener("click", () => {
-        detailImage.src = item.file;
-        detailTitle.textContent = item.title;
-        detailText.textContent = item.text;
-
-        galleryView.classList.add("hidden");
-        detailView.classList.remove("hidden");
-    });
+    img.addEventListener("click", () => openImage(img, i));
 
     gallery.appendChild(img);
+}
+
+function openImage(clickedImage, number) {
+
+    const rect = clickedImage.getBoundingClientRect();
+
+    const flying = document.createElement("img");
+
+    flying.src = clickedImage.src;
+    flying.className = "fly-image";
+
+    flying.style.left = rect.left + "px";
+    flying.style.top = rect.top + "px";
+    flying.style.width = rect.width + "px";
+    flying.style.height = rect.height + "px";
+
+    document.body.appendChild(flying);
+
+    requestAnimationFrame(() => {
+
+        flying.style.transition =
+            "all 550ms cubic-bezier(.22,1,.36,1)";
+
+        flying.style.left = "0px";
+        flying.style.top = "0px";
+        flying.style.width = "50vw";
+        flying.style.height = "100vh";
+    });
+
+    setTimeout(() => {
+
+        viewerImage.src = clickedImage.src;
+        textContent.innerHTML =
+            descriptions[number] || "";
+
+        viewer.classList.add("active");
+
+        flying.remove();
+
+    }, 550);
+}
+
+closeBtn.addEventListener("click", () => {
+    viewer.classList.remove("active");
 });
 
-document.getElementById("back-btn").addEventListener("click", () => {
-    detailView.classList.add("hidden");
-    galleryView.classList.remove("hidden");
+document.addEventListener("keydown", e => {
+    if (e.key === "Escape") {
+        viewer.classList.remove("active");
+    }
 });
