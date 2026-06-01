@@ -3,19 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Gallery</title>
+    <title>Interactive Image Gallery</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <main class="gallery" id="gallery"></main>
+    <div id="gallery" class="gallery"></div>
 
-    <div class="overlay" id="overlay">
-        <button class="close-btn" id="closeBtn">&times;</button>
-        <div class="overlay-left" id="overlayLeft"></div>
-        <div class="overlay-right">
-            <h1 id="overlayTitle">Image Title</h1>
-            <p id="overlayText">Your custom descriptive text goes here.</p>
+    <div id="detail-view" class="detail-view">
+        <div id="text-panel" class="text-panel">
+            <button id="close-btn" class="close-btn">Close</button>
+            <div id="detail-text-content"></div>
         </div>
     </div>
 
