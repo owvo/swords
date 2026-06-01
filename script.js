@@ -21,18 +21,18 @@ const imageTexts = {
     `,
 
     "2.png": `
-        <h2>A Different Story</h2>
-        <p>This text belongs exclusively to the second image.</p>
+        <h2>Checkmate</h2>
+        <p>Wow, who could've thought the checkmate sword is just a regular sword mesh lazily slapped on with a checkered texture, it could have been one of the coolest swords in the game if you could hold a giant rook, bishop, horse or castle, but that potential was squandered because somebody didn't feel like going through the effort of modeling allat.</p>
     `,
 
     "3.png": `
-        <h2>Third Image Title</h2>
-        <p>Custom description for image 3 goes here.</p>
+        <h2>Copy Tool</h2>
+        <p>Really? That's it? Well atleast it's big. Heh, that's what she said. ( ͡° ͜ʖ ͡°)</p>
     `,
 
     "4.png": `
-        <h2>The First Masterpiece</h2>
-        <p>This is your completely unique text for the first image.</p>
+        <h2>CS Resume</h2>
+        <p>Somebody was feeling a little self referential when creating this one.</p>
         <p>You can write as much HTML or plain text here as you want.</p>
     `,
 
