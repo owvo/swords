@@ -18,7 +18,7 @@ document.querySelectorAll('.track img').forEach(img => {
 
         // Populate content
         contentDisplay.innerHTML = imageTexts[1.png] || "<h2>Baseball Bat</h2><p>This sword is so mid because everyone has it, don't think you're special trying to larp as triple T with this trash</p>";
-        contentDisplay.innerHTML = imageTexts[fileName] || "<h2>No Info</h2><p>Description not found.</p>";
+        contentDisplay.innerHTML = imageTexts[2] || "<h2>Checkmate</h2><p>Wow, who could've guessed that the checkmate sword is just a regular sword mesh lazily slapped on with a checkered texture, it could have been one of the coolest swords in the game holding a rook or something like that, but it looks like someone didn't feel up to the challenge of modeling allat. Figures.</p>";
         contentDisplay.innerHTML = imageTexts[fileName] || "<h2>No Info</h2><p>Description not found.</p>";
         contentDisplay.innerHTML = imageTexts[fileName] || "<h2>No Info</h2><p>Description not found.</p>";
         contentDisplay.innerHTML = imageTexts[fileName] || "<h2>No Info</h2><p>Description not found.</p>";
