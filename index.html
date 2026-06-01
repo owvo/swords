@@ -4,25 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gallery</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <div id="gallery"></div>
+<div id="gallery"></div>
 
-    <div id="viewer">
-        <div id="viewer-image-container">
-            <img id="viewer-image" src="" alt="">
-        </div>
-
-        <div id="viewer-text">
-            <button id="close">✕</button>
-
-            <div id="text-content"></div>
-        </div>
+<div id="viewer">
+    <div id="viewer-image-container">
+        <img id="viewer-image">
     </div>
 
-    <script src="script.js"></script>
+    <div id="viewer-text">
+        <button id="close-btn">✕</button>
 
+        <textarea>
+Write whatever text you want here.
+
+You can replace this with custom content for each image later.
+        </textarea>
+    </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
