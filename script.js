@@ -11,13 +11,6 @@ const imageTexts = {
     "1.png": `
         <h2>Baseball Bat</h2>
         <p>This sword is so mid because everyone has it, don't think you're special trying to larp as triple T with this trash.</p>
-        <p>Capsule: Strange's Capsule
-        
-        <strong>Animated:</strong>: No
-        
-       <strong>Light Source:</strong>: No
-        
-        <strong>Kill Animation:</strong>: Idk don't ask me</p>
     `,
 
     "2.png": `
