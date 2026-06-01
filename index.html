@@ -3,28 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Gallery</title>
+    <title>Gallery</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="gallery-view">
-        <h1>Gallery</h1>
-        <div id="gallery"></div>
-    </div>
+    <div id="gallery"></div>
 
-    <div id="detail-view" class="hidden">
-        <div class="image-panel">
-            <img id="detail-image" src="" alt="">
+    <div id="viewer">
+        <div id="viewer-image-container">
+            <img id="viewer-image" src="" alt="">
         </div>
 
-        <div class="text-panel">
-            <button id="back-btn">← Back to Gallery</button>
-            <h2 id="detail-title"></h2>
-            <p id="detail-text"></p>
+        <div id="viewer-text">
+            <button id="close">✕</button>
+
+            <div id="text-content"></div>
         </div>
     </div>
 
     <script src="script.js"></script>
+
 </body>
 </html>
