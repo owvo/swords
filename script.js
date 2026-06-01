@@ -6,16 +6,179 @@ const closeBtn = document.getElementById('close-btn');
 
 let activeAnimatingImg = null;
 
-// Map custom text to each image here
-const imageTexts = {};
-for (let i = 1; i <= 32; i++) {
-    // You can customize the text for each specific image inside this object later
-    imageTexts[`${i}.png`] = `
-        <h2>Details for Image ${i}</h2>
-        <p>This is where you write the specific text covering the right side of the screen for ${i}.png.</p>
-        <p>Because it's isolated on this side, you can make this as long as you want and it will scroll independently of the image.</p>
-    `;
-}
+// PASTE THIS INSTEAD:
+const imageTexts = {
+    "1.png": `
+        <h2>The First Masterpiece</h2>
+        <p>This is your completely unique text for the first image.</p>
+        <p>You can write as much HTML or plain text here as you want.</p>
+    `,
+
+    "2.png": `
+        <h2>A Different Story</h2>
+        <p>This text belongs exclusively to the second image.</p>
+    `,
+
+    "3.png": `
+        <h2>Third Image Title</h2>
+        <p>Custom description for image 3 goes here.</p>
+    `,
+
+    "4.png": `
+        <h2>The First Masterpiece</h2>
+        <p>This is your completely unique text for the first image.</p>
+        <p>You can write as much HTML or plain text here as you want.</p>
+    `,
+
+    "5.png": `
+        <h2>A Different Story</h2>
+        <p>This text belongs exclusively to the second image.</p>
+    `,
+
+    "6.png": `
+        <h2>Third Image Title</h2>
+        <p>Custom description for image 3 goes here.</p>
+    `,
+
+    "7.png": `
+        <h2>The First Masterpiece</h2>
+        <p>This is your completely unique text for the first image.</p>
+        <p>You can write as much HTML or plain text here as you want.</p>
+    `,
+
+    "8.png": `
+        <h2>A Different Story</h2>
+        <p>This text belongs exclusively to the second image.</p>
+    `,
+
+    "9.png": `
+        <h2>Third Image Title</h2>
+        <p>Custom description for image 3 goes here.</p>
+    `,
+
+    "10.png": `
+        <h2>The First Masterpiece</h2>
+        <p>This is your completely unique text for the first image.</p>
+        <p>You can write as much HTML or plain text here as you want.</p>
+    `,
+
+    "11.png": `
+        <h2>A Different Story</h2>
+        <p>This text belongs exclusively to the second image.</p>
+    `,
+
+    "12.png": `
+        <h2>Third Image Title</h2>
+        <p>Custom description for image 3 goes here.</p>
+    `,
+
+    "13.png": `
+        <h2>The First Masterpiece</h2>
+        <p>This is your completely unique text for the first image.</p>
+        <p>You can write as much HTML or plain text here as you want.</p>
+    `,
+
+    "14.png": `
+        <h2>A Different Story</h2>
+        <p>This text belongs exclusively to the second image.</p>
+    `,
+
+    "15.png": `
+        <h2>Third Image Title</h2>
+        <p>Custom description for image 3 goes here.</p>
+    `,
+
+    "16.png": `
+        <h2>The First Masterpiece</h2>
+        <p>This is your completely unique text for the first image.</p>
+        <p>You can write as much HTML or plain text here as you want.</p>
+    `,
+
+    "17.png": `
+        <h2>A Different Story</h2>
+        <p>This text belongs exclusively to the second image.</p>
+    `,
+
+    "18.png": `
+        <h2>Third Image Title</h2>
+        <p>Custom description for image 3 goes here.</p>
+    `,
+
+    "19.png": `
+        <h2>The First Masterpiece</h2>
+        <p>This is your completely unique text for the first image.</p>
+        <p>You can write as much HTML or plain text here as you want.</p>
+    `,
+
+    "20.png": `
+        <h2>A Different Story</h2>
+        <p>This text belongs exclusively to the second image.</p>
+    `,
+
+    "21.png": `
+        <h2>Third Image Title</h2>
+        <p>Custom description for image 3 goes here.</p>
+    `,
+
+    "22.png": `
+        <h2>The First Masterpiece</h2>
+        <p>This is your completely unique text for the first image.</p>
+        <p>You can write as much HTML or plain text here as you want.</p>
+    `,
+
+    "23.png": `
+        <h2>A Different Story</h2>
+        <p>This text belongs exclusively to the second image.</p>
+    `,
+
+    "24.png": `
+        <h2>Third Image Title</h2>
+        <p>Custom description for image 3 goes here.</p>
+    `,
+
+    "25.png": `
+        <h2>The First Masterpiece</h2>
+        <p>This is your completely unique text for the first image.</p>
+        <p>You can write as much HTML or plain text here as you want.</p>
+    `,
+
+    "26.png": `
+        <h2>A Different Story</h2>
+        <p>This text belongs exclusively to the second image.</p>
+    `,
+
+    "27.png": `
+        <h2>Third Image Title</h2>
+        <p>Custom description for image 3 goes here.</p>
+    `,
+
+    "28.png": `
+        <h2>The First Masterpiece</h2>
+        <p>This is your completely unique text for the first image.</p>
+        <p>You can write as much HTML or plain text here as you want.</p>
+    `,
+
+    "29.png": `
+        <h2>A Different Story</h2>
+        <p>This text belongs exclusively to the second image.</p>
+    `,
+
+    "30.png": `
+        <h2>Third Image Title</h2>
+        <p>Custom description for image 3 goes here.</p>
+    `,
+
+    "31.png": `
+        <h2>The First Masterpiece</h2>
+        <p>This is your completely unique text for the first image.</p>
+        <p>You can write as much HTML or plain text here as you want.</p>
+    `,
+
+    "32.png": `
+        <h2>The Grand Finale</h2>
+        <p>This is the custom text for your very last image.</p>
+    `
+}; // <--- Don't forget this closing bracket and semicolon at the very end!
 
 // Generate the 32 images on the home page
 for (let i = 1; i <= 32; i++) {
