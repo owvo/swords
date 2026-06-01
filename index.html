@@ -3,29 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gallery</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Image Gallery</title>
+    <style>
+        /* Base Setup */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #212121;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Seamless 8-Column Grid */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            width: 100vw;
+            /* Ensures 250x250 aspect ratio behavior while staying responsive */
+            grid-auto-rows: 12.5vw; 
+        }
+
+        .gallery-item {
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        /* Subtle hover effect (optional, keeping images strict) */
+        .gallery-item:hover img {
+            filter: brightness(1.1);
+        }
+
+        /* Split Screen Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            background-color: #212121;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 10;
+            transition: opacity 0.5s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Left Side: Animated Image Container */
+        .overlay-left {
+            width: 50%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            background-color: #212121;
+        }
+
+        /* This is the clone that will do the heavy lifting animation */
+        .flying-img {
+            position: fixed;
+            object-fit: cover;
+            z-index: 99;
+            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Right Side: Text Area */
+        .overlay-right {
+            width: 50%;
+            height: 100%;
+            padding: 40px;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+            transform: translateX(30px);
+            transition: opacity 0.4s ease 0.3s, transform 0.4s ease 0.3s;
+        }
+
+        .overlay.active .overlay-right {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.2s;
+            z-index: 100;
+        }
+
+        .close-btn:hover {
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
 
-<div id="gallery"></div>
+    <main class="gallery" id="gallery"></main>
 
-<div id="viewer">
-    <div id="viewer-image-container">
-        <img id="viewer-image">
+    <div class="overlay" id="overlay">
+        <button class="close-btn" id="closeBtn">&times;</button>
+        <div class="overlay-left" id="overlayLeft"></div>
+        <div class="overlay-right">
+            <h1 id="overlayTitle">Image Title</h1>
+            <p id="overlayText" style="margin-top: 20px; line-height: 1.6; color: #ccc;">
+                Your custom descriptive text goes here. You can customize this dynamically using JavaScript based on the image ID clicked.
+            </p>
+        </div>
     </div>
 
-    <div id="viewer-text">
-        <button id="close-btn">✕</button>
+    <script>
+        const gallery = document.getElementById('gallery');
+        const overlay = document.getElementById('overlay');
+        const overlayLeft = document.getElementById('overlayLeft');
+        const closeBtn = document.getElementById('closeBtn');
+        const overlayTitle = document.getElementById('overlayTitle');
+        const overlayText = document.getElementById('overlayText');
 
-        <textarea>
-Write whatever text you want here.
+        // Text data mapping for your 32 images
+        const imageData = {
+            1: { title: "Project Alpha", text: "Description for the first image goes here." },
+            2: { title: "Project Beta", text: "Description for the second image goes here." },
+            // Add entries up to 32 as needed...
+        };
 
-You can replace this with custom content for each image later.
-        </textarea>
-    </div>
-</div>
+        // 1. Dynamically generate the 32 images seamlessly
+        for (let i = 1; i <= 32; i++) {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            
+            const img = document.createElement('img');
+            img.src = `${i).png`;
+            img.alt = `Gallery Image ${i}`;
+            img.dataset.id = i;
 
-<script src="script.js"></script>
+            item.appendChild(img);
+            gallery.appendChild(item);
+
+            // 2. Click Animation Logic
+            item.addEventListener('click', (e) => {
+                const rect = img.getBoundingClientRect();
+                
+                // Create a clone to handle the physical sliding/spinning animation
+                const clone = img.cloneNode();
+                clone.className = 'flying-img';
+                
+                // Set initial positioning exactly over the clicked item
+                clone.style.top = `${rect.top}px`;
+                clone.style.left = `${rect.left}px`;
+                clone.style.width = `${rect.width}px`;
+                clone.style.height = `${rect.height}px`;
+                
+                document.body.appendChild(clone);
+
+                // Dynamically update text on the right side
+                const data = imageData[i] || { title: `Image ${i}`, text: "Default customized text for this display." };
+                overlayTitle.textContent = data.title;
+                overlayText.textContent = data.text;
+
+                // Trigger layout reflow so browser registers the initial position
+                clone.getBoundingClientRect();
+
+                // Activate overlay background wrapper
+                overlay.classList.add('active');
+
+                // Animate clone to the left half of the screen + spin 360 CCW
+                clone.style.top = '0px';
+                clone.style.left = '0px';
+                clone.style.width = '50vw';
+                clone.style.height = '100vh';
+                clone.style.transform = 'rotate(-360deg)';
+
+                // Once animation finishes, cleanly tuck it into the static overlay layout
+                setTimeout(() => {
+                    clone.style.transition = 'none';
+                    clone.style.transform = 'none';
+                    clone.style.position = 'relative';
+                    clone.style.width = '100%';
+                    clone.style.height = '100%';
+                    overlayLeft.appendChild(clone);
+                }, 600); // Matches the 0.6s CSS transition
+            });
+        }
+
+        // 3. Close Overlay Logic
+        closeBtn.addEventListener('click', () => {
+            overlay.classList.remove('active');
+            // Allow fade-out animation to complete before emptying left container
+            setTimeout(() => {
+                overlayLeft.innerHTML = '';
+            }, 500);
+        });
+    </script>
 </body>
 </html>
