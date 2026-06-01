@@ -1,24 +1,35 @@
+/* Apply box-sizing globally to prevent padding from expanding elements */
+* {
+    box-sizing: border-box;
+}
+
 body {
     background-color: #252626;
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* Absolutely prevents left/right scrolling */
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden; /* Absolutely forbids horizontal scrolling */
     font-family: sans-serif;
 }
 
-/* Responsive 8-column grid */
+/* Perfect 8-column viewport containment */
 .gallery {
     display: grid;
-    grid-template-columns: repeat(8, 1fr); /* 8 equal columns that scale to fit the screen */
-    gap: 15px; 
+    /* minmax(0, 1fr) forces the columns to shrink to 0 if necessary to fit the screen */
+    grid-template-columns: repeat(8, minmax(0, 1fr)); 
+    gap: 12px; /* Clean spacing between items */
     width: 100%;
-    box-sizing: border-box; /* Ensures padding stays inside the screen width */
+    max-width: 100%;
     padding: 40px 20px;
+    margin: 0 auto;
 }
 
 .gallery img {
-    width: 100%; /* Takes up exactly its fraction of the column */
-    aspect-ratio: 1 / 1; /* Forces the image to stay a perfect square (simulating your 250x250) */
+    width: 100%;
+    max-width: 100%;
+    display: block;
+    aspect-ratio: 1 / 1; /* Keeps them perfectly square */
     object-fit: cover;
     cursor: pointer;
     transition: opacity 0.2s;
@@ -33,8 +44,8 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%; /* Changed from vw to % to avoid scrollbar overflow */
-    height: 100%; /* Changed from vh to % */
+    width: 100%;
+    height: 100%;
     pointer-events: none; 
     z-index: 10;
 }
@@ -46,17 +57,16 @@ body {
 /* Right-side text panel */
 .text-panel {
     position: absolute;
-    right: -50%; /* Hidden off-screen initially */
+    right: -50%; 
     top: 0;
     width: 50%;
     height: 100%;
     background-color: #252626; 
     color: white;
-    box-sizing: border-box;
     padding: 60px 40px;
     transition: right 0.8s ease-in-out;
     border-left: 1px solid #444;
-    overflow-y: auto;
+    overflow-y: auto; /* Allows text to scroll vertically if it's long */
 }
 
 .detail-view.active .text-panel {
@@ -75,12 +85,12 @@ body {
                 transform 0.8s ease-in-out;
 }
 
-/* End state of image applied via JS */
+/* End state of image */
 .animating-image.expanded {
     top: 0 !important;
     left: 0 !important;
-    width: 50% !important; /* Covers exact left half cleanly */
-    height: 100% !important; /* Covers exact full height cleanly */
+    width: 50% !important; 
+    height: 100% !important; 
     transform: rotate(-360deg) !important; 
 }
 
