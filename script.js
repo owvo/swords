@@ -1,69 +1,83 @@
 const gallery = document.getElementById('gallery');
-const overlay = document.getElementById('overlay');
-const overlayLeft = document.getElementById('overlayLeft');
-const closeBtn = document.getElementById('closeBtn');
-const overlayTitle = document.getElementById('overlayTitle');
-const overlayText = document.getElementById('overlayText');
+const detailView = document.getElementById('detail-view');
+const textPanel = document.getElementById('text-panel');
+const textContent = document.getElementById('detail-text-content');
+const closeBtn = document.getElementById('close-btn');
 
-// Add your custom text for each image here
-const imageData = {
-    1: { title: "Image 1", text: "Custom text for image 1." },
-    2: { title: "Image 2", text: "Custom text for image 2." }
-};
+let activeAnimatingImg = null;
 
+// Map custom text to each image here
+const imageTexts = {};
 for (let i = 1; i <= 32; i++) {
-    const item = document.createElement('div');
-    item.className = 'gallery-item';
-    
+    // You can customize the text for each specific image inside this object later
+    imageTexts[`${i}.png`] = `
+        <h2>Details for Image ${i}</h2>
+        <p>This is where you write the specific text covering the right side of the screen for ${i}.png.</p>
+        <p>Because it's isolated on this side, you can make this as long as you want and it will scroll independently of the image.</p>
+    `;
+}
+
+// Generate the 32 images on the home page
+for (let i = 1; i <= 32; i++) {
     const img = document.createElement('img');
-    img.src = `${i}.png`;
+    img.src = `${i}.png`; // Looks for 1.png, 2.png, etc.
     img.alt = `Gallery Image ${i}`;
-    img.dataset.id = i;
+    
+    // Add click event listener to each image
+    img.addEventListener('click', () => openImage(img, `${i}.png`));
+    gallery.appendChild(img);
+}
 
-    item.appendChild(img);
-    gallery.appendChild(item);
+function openImage(sourceImg, imageName) {
+    if (activeAnimatingImg) return; // Prevent clicking multiple images at once
 
-    item.addEventListener('click', () => {
-        const rect = img.getBoundingClientRect();
-        const clone = img.cloneNode();
-        clone.className = 'flying-img';
-        
-        clone.style.top = `${rect.top}px`;
-        clone.style.left = `${rect.left}px`;
-        clone.style.width = `${rect.width}px`;
-        clone.style.height = `${rect.height}px`;
-        
-        document.body.appendChild(clone);
+    // Get exact position of clicked image on the screen
+    const rect = sourceImg.getBoundingClientRect();
 
-        const data = imageData[i] || { title: `Image ${i}`, text: "Default customized description text." };
-        overlayTitle.textContent = data.title;
-        overlayText.textContent = data.text;
+    // Create a clone of the image to animate
+    activeAnimatingImg = document.createElement('img');
+    activeAnimatingImg.src = sourceImg.src;
+    activeAnimatingImg.classList.add('animating-image');
+    
+    // Set clone's initial position exactly over the clicked image
+    activeAnimatingImg.style.top = `${rect.top}px`;
+    activeAnimatingImg.style.left = `${rect.left}px`;
+    activeAnimatingImg.style.width = `${rect.width}px`;
+    activeAnimatingImg.style.height = `${rect.height}px`;
+    activeAnimatingImg.style.transform = `rotate(0deg)`;
 
-        clone.getBoundingClientRect(); // Force reflow
+    document.body.appendChild(activeAnimatingImg);
 
-        overlay.classList.add('active');
+    // Hide original image so it looks like it's leaving the grid
+    sourceImg.style.visibility = 'hidden';
+    activeAnimatingImg.sourceImg = sourceImg; 
 
-        // Smoothly scale to left side and spin 360 counterclockwise
-        clone.style.top = '0px';
-        clone.style.left = '0px';
-        clone.style.width = '50vw';
-        clone.style.height = '100vh';
-        clone.style.transform = 'rotate(-360deg)';
+    // Populate the right side text panel
+    textContent.innerHTML = imageTexts[imageName];
 
-        setTimeout(() => {
-            clone.style.transition = 'none';
-            clone.style.transform = 'none';
-            clone.style.position = 'relative';
-            clone.style.width = '100%';
-            clone.style.height = '100%';
-            overlayLeft.appendChild(clone);
-        }, 600);
+    // Force browser to register the initial position before applying CSS transitions
+    activeAnimatingImg.getBoundingClientRect();
+
+    // Trigger the animation to the left side and slide out the text panel
+    requestAnimationFrame(() => {
+        activeAnimatingImg.classList.add('expanded');
+        detailView.classList.add('active');
     });
 }
 
-closeBtn.addEventListener('click', () => {
-    overlay.classList.remove('active');
+closeBtn.addEventListener('click', closeImage);
+
+function closeImage() {
+    if (!activeAnimatingImg) return;
+
+    // Remove the expanded class to reverse the animation
+    activeAnimatingImg.classList.remove('expanded');
+    detailView.classList.remove('active');
+
+    // Wait for the 0.8s CSS transition to finish before cleaning up
     setTimeout(() => {
-        overlayLeft.innerHTML = '';
-    }, 500);
-});
+        activeAnimatingImg.sourceImg.style.visibility = 'visible';
+        activeAnimatingImg.remove();
+        activeAnimatingImg = null;
+    }, 800); 
+}
