@@ -22,7 +22,7 @@ const imageTexts = {
 
     "2.png": `
         <h2>Checkmate</h2>
-        <p>Wow, who could've thought the checkmate sword is just a regular sword mesh lazily slapped on with a checkered texture, it could have been one of the coolest swords in the game if you could hold a giant rook, bishop, horse or castle, but that potential was squandered because somebody didn't feel like going through the effort of modeling allat.</p>
+        <p>Wow, who could've thought the checkmate sword is just a regular sword mesh lazily slapped on with a checkered texture, it could have been one of the coolest swords in the game holding a rook or something like that, but it looks like someone didn't feel up to the challenge of modeling allat. Figures.</p>
     `,
 
     "3.png": `
@@ -37,13 +37,13 @@ const imageTexts = {
     `,
 
     "5.png": `
-        <h2>A Different Story</h2>
-        <p>This text belongs exclusively to the second image.</p>
+        <h2>Darkheart</h2>
+        <p>The most forgettable earnable sword in the game. I mean seriously, do you expect us to be satified with this boring thing for all the work we did? No surprise that barely anybody uses this.</p>
     `,
 
     "6.png": `
-        <h2>Third Image Title</h2>
-        <p>Custom description for image 3 goes here.</p>
+        <h2>Dark Katana</h2>
+        <p>Did you run out of ideas? What's going on here, you have infinite possibilities for swords and you choose this?</p>
     `,
 
     "7.png": `
