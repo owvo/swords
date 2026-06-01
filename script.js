@@ -152,7 +152,7 @@ const imageTexts = {
 
     "28.png": `
         <h2>Sharp Gift</h2>
-        <p>Will we ever know what's inside? Maybe it's the friends we made along the way</p>
+        <p>What a subversive masterpiece. Will we ever know what's inside? Maybe it's the friends we made along the way</p>
     `,
 
     "29.png": `
