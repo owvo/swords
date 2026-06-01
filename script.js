@@ -1,112 +1,69 @@
-const gallery = document.getElementById("gallery");
-const viewer = document.getElementById("viewer");
-const viewerImg = document.getElementById("viewer-image");
-const closeBtn = document.getElementById("close-btn");
+const gallery = document.getElementById('gallery');
+const overlay = document.getElementById('overlay');
+const overlayLeft = document.getElementById('overlayLeft');
+const closeBtn = document.getElementById('closeBtn');
+const overlayTitle = document.getElementById('overlayTitle');
+const overlayText = document.getElementById('overlayText');
 
-let activeThumb = null;
+// Add your custom text for each image here
+const imageData = {
+    1: { title: "Image 1", text: "Custom text for image 1." },
+    2: { title: "Image 2", text: "Custom text for image 2." }
+};
 
-/* Create 32 images */
+for (let i = 1; i <= 32; i++) {
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    
+    const img = document.createElement('img');
+    img.src = `${i}.png`;
+    img.alt = `Gallery Image ${i}`;
+    img.dataset.id = i;
 
-for(let i=1;i<=32;i++){
+    item.appendChild(img);
+    gallery.appendChild(item);
 
-    const img = document.createElement("img");
+    item.addEventListener('click', () => {
+        const rect = img.getBoundingClientRect();
+        const clone = img.cloneNode();
+        clone.className = 'flying-img';
+        
+        clone.style.top = `${rect.top}px`;
+        clone.style.left = `${rect.left}px`;
+        clone.style.width = `${rect.width}px`;
+        clone.style.height = `${rect.height}px`;
+        
+        document.body.appendChild(clone);
 
-    img.src = `images/${i}.png`;
-    img.className = "thumb";
+        const data = imageData[i] || { title: `Image ${i}`, text: "Default customized description text." };
+        overlayTitle.textContent = data.title;
+        overlayText.textContent = data.text;
 
-    img.addEventListener("click", () => openImage(img));
+        clone.getBoundingClientRect(); // Force reflow
 
-    gallery.appendChild(img);
+        overlay.classList.add('active');
+
+        // Smoothly scale to left side and spin 360 counterclockwise
+        clone.style.top = '0px';
+        clone.style.left = '0px';
+        clone.style.width = '50vw';
+        clone.style.height = '100vh';
+        clone.style.transform = 'rotate(-360deg)';
+
+        setTimeout(() => {
+            clone.style.transition = 'none';
+            clone.style.transform = 'none';
+            clone.style.position = 'relative';
+            clone.style.width = '100%';
+            clone.style.height = '100%';
+            overlayLeft.appendChild(clone);
+        }, 600);
+    });
 }
 
-function openImage(img){
-
-    activeThumb = img;
-
-    const start = img.getBoundingClientRect();
-
-    const clone = img.cloneNode();
-
-    clone.style.position = "fixed";
-    clone.style.left = start.left + "px";
-    clone.style.top = start.top + "px";
-    clone.style.width = start.width + "px";
-    clone.style.height = start.height + "px";
-
-    clone.style.zIndex = "9999";
-
-    clone.style.transformOrigin = "center center";
-
-    clone.style.transition =
-        "left 0.9s ease, top 0.9s ease, width 0.9s ease, height 0.9s ease, transform 0.9s ease";
-
-    document.body.appendChild(clone);
-
-    viewer.style.display = "flex";
-    viewer.style.visibility = "hidden";
-
-    requestAnimationFrame(()=>{
-
-        clone.style.left = "0px";
-        clone.style.top = "0px";
-
-        clone.style.width = "50vw";
-        clone.style.height = "100vh";
-
-        clone.style.transform = "rotate(-360deg)";
-    });
-
-    clone.addEventListener("transitionend", ()=>{
-
-        viewerImg.src = img.src;
-
-        viewer.style.visibility = "visible";
-        viewer.classList.add("open");
-
-        clone.remove();
-    }, { once:true });
-}
-
-closeBtn.addEventListener("click", ()=>{
-
-    if(!activeThumb) return;
-
-    const end = activeThumb.getBoundingClientRect();
-
-    const clone = viewerImg.cloneNode();
-
-    clone.style.position = "fixed";
-    clone.style.left = "0px";
-    clone.style.top = "0px";
-    clone.style.width = "50vw";
-    clone.style.height = "100vh";
-
-    clone.style.objectFit = "cover";
-    clone.style.zIndex = "9999";
-
-    clone.style.transition =
-        "left 0.9s ease, top 0.9s ease, width 0.9s ease, height 0.9s ease, transform 0.9s ease";
-
-    document.body.appendChild(clone);
-
-    viewer.classList.remove("open");
-    viewer.style.display = "none";
-
-    requestAnimationFrame(()=>{
-
-        clone.style.left = end.left + "px";
-        clone.style.top = end.top + "px";
-
-        clone.style.width = end.width + "px";
-        clone.style.height = end.height + "px";
-
-        clone.style.transform = "rotate(360deg)";
-    });
-
-    clone.addEventListener("transitionend", ()=>{
-
-        clone.remove();
-        activeThumb = null;
-
-    }, { once:true });
+closeBtn.addEventListener('click', () => {
+    overlay.classList.remove('active');
+    setTimeout(() => {
+        overlayLeft.innerHTML = '';
+    }, 500);
 });
