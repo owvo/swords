@@ -19,7 +19,7 @@ const imageTexts = {
     "12.png": `<h2>Honour</h2><p>This sword sucks.</p>`,
     "13.png": `<h2>Icsickle</h2><p>Now you can scratch your back easier!</p>`,
     "14.png": `<h2>Jack Frost's Revenge</h2><p>This text belongs exclusively to the second image.</p>`,
-    "15.png": `<h2>Keyboard</h2><p>Custom description for image 3 goes here.</p>`,
+    "15.png": `<h2>Keyboard</h2><p>qwertyuiopasdfghjklzxcvbnm</p>`,
     "16.png": `<h2>Killercrow</h2><p>Look at my sword dawgggggg I'm goin to spawn 😫🤯🤣</p>`,
     "17.png": `<h2>Lollichop</h2><p>bro capitalized</p>`,
     "18.png": `<h2>Nature's Curse</h2><p>Probably smells even worse than it looks</p>`,
