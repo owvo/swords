@@ -31,12 +31,12 @@ const imageTexts = {
 
     "5.png": `
         <h2>Darkheart</h2>
-        <p>The most forgettable earnable sword in the game. I mean seriously, do you expect us to be satified with this boring thing for all the work we did? No surprise that barely anybody uses this.</p>
+        <p>The most forgettable earnable sword in the game. No surprise that hardly anybody uses this.</p>
     `,
 
     "6.png": `
         <h2>Dark Katana</h2>
-        <p>Did you run out of ideas? What's going on here, you have infinite possibilities for swords and you choose this?</p>
+        <p>You had infinite possibilities for swords and you seriously choose this?</p>
     `,
 
     "7.png": `
