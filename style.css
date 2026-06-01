@@ -2,22 +2,23 @@ body {
     background-color: #252626;
     margin: 0;
     padding: 0;
-    overflow-x: auto; /* Allows scrolling if screen is too small for 8 columns */
+    overflow-x: hidden; /* Absolutely prevents left/right scrolling */
     font-family: sans-serif;
 }
 
-/* Strictly 8 columns, 250px each */
+/* Responsive 8-column grid */
 .gallery {
     display: grid;
-    grid-template-columns: repeat(8, 250px);
+    grid-template-columns: repeat(8, 1fr); /* 8 equal columns that scale to fit the screen */
     gap: 15px; 
-    justify-content: center;
+    width: 100%;
+    box-sizing: border-box; /* Ensures padding stays inside the screen width */
     padding: 40px 20px;
 }
 
 .gallery img {
-    width: 250px;
-    height: 250px;
+    width: 100%; /* Takes up exactly its fraction of the column */
+    aspect-ratio: 1 / 1; /* Forces the image to stay a perfect square (simulating your 250x250) */
     object-fit: cover;
     cursor: pointer;
     transition: opacity 0.2s;
@@ -32,9 +33,9 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none; /* Let clicks pass through to gallery when hidden */
+    width: 100%; /* Changed from vw to % to avoid scrollbar overflow */
+    height: 100%; /* Changed from vh to % */
+    pointer-events: none; 
     z-index: 10;
 }
 
@@ -45,16 +46,16 @@ body {
 /* Right-side text panel */
 .text-panel {
     position: absolute;
-    right: -50vw; /* Hidden off-screen initially */
+    right: -50%; /* Hidden off-screen initially */
     top: 0;
-    width: 50vw;
-    height: 100vh;
+    width: 50%;
+    height: 100%;
     background-color: #252626; 
     color: white;
     box-sizing: border-box;
     padding: 60px 40px;
     transition: right 0.8s ease-in-out;
-    border-left: 1px solid #444; /* Slight divider */
+    border-left: 1px solid #444;
     overflow-y: auto;
 }
 
@@ -67,7 +68,6 @@ body {
     position: fixed;
     z-index: 20;
     object-fit: cover;
-    /* CSS transitions for all changing properties */
     transition: top 0.8s ease-in-out, 
                 left 0.8s ease-in-out, 
                 width 0.8s ease-in-out, 
@@ -79,9 +79,9 @@ body {
 .animating-image.expanded {
     top: 0 !important;
     left: 0 !important;
-    width: 50vw !important;
-    height: 100vh !important;
-    transform: rotate(-360deg) !important; /* 360 counterclockwise */
+    width: 50% !important; /* Covers exact left half cleanly */
+    height: 100% !important; /* Covers exact full height cleanly */
+    transform: rotate(-360deg) !important; 
 }
 
 /* Close button styling */
