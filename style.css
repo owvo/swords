@@ -1,82 +1,64 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background: #111;
-    color: white;
-}
-
-h1 {
-    text-align: center;
-    padding: 20px;
-}
-
-#gallery {
+.gallery {
     display: grid;
-    grid-template-columns: repeat(auto-fit, 250px);
+    grid-template-columns: repeat(7, 250px);
+    gap: 10px;
     justify-content: center;
-    gap: 15px;
-    padding: 20px;
 }
 
-.thumbnail {
+.gallery img {
     width: 250px;
     height: 250px;
     object-fit: cover;
     cursor: pointer;
-    border: 2px solid #333;
-    transition: transform 0.2s;
 }
 
-.thumbnail:hover {
-    transform: scale(1.03);
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 1000;
+
+    opacity: 0;
+    transition: opacity 0.25s ease;
 }
 
-.hidden {
-    display: none !important;
+.modal.show {
+    opacity: 1;
 }
 
-#detail-view {
+.modal-content {
     display: flex;
-    width: 100vw;
-    height: 100vh;
+    width: 90%;
+    height: 90%;
+    margin: auto;
+    background: white;
 }
 
-.image-panel {
+.modal-image {
     width: 50%;
-    height: 100%;
-    background: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.image-panel img {
-    width: 100%;
     height: 100%;
     object-fit: contain;
+
+    transform: scale(0.3);
+    transition: transform 0.25s ease;
 }
 
-.text-panel {
+.modal.show .modal-image {
+    transform: scale(1);
+}
+
+.modal-text {
     width: 50%;
-    padding: 40px;
+    padding: 20px;
     overflow-y: auto;
 }
 
-.text-panel h2 {
-    margin-bottom: 20px;
-}
-
-.text-panel p {
-    line-height: 1.6;
-}
-
-#back-btn {
-    margin-bottom: 30px;
-    padding: 10px 15px;
+.close {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    color: white;
+    font-size: 40px;
     cursor: pointer;
 }
