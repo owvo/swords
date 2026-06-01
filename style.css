@@ -1,88 +1,105 @@
-* {
-    box-sizing: border-box;
+body {
+    background-color: #252626;
     margin: 0;
     padding: 0;
+    overflow-x: auto; /* Allows scrolling if screen is too small for 8 columns */
+    font-family: sans-serif;
 }
-body {
-    background-color: #212121;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    overflow-x: hidden;
-}
+
+/* Strictly 8 columns, 250px each */
 .gallery {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    width: 100vw;
-    grid-auto-rows: 12.5vw; 
+    grid-template-columns: repeat(8, 250px);
+    gap: 15px; 
+    justify-content: center;
+    padding: 40px 20px;
 }
-.gallery-item {
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-    overflow: hidden;
-}
-.gallery-item img {
-    width: 100%;
-    height: 100%;
+
+.gallery img {
+    width: 250px;
+    height: 250px;
     object-fit: cover;
-    display: block;
+    cursor: pointer;
+    transition: opacity 0.2s;
 }
-.overlay {
+
+.gallery img:hover {
+    opacity: 0.7;
+}
+
+/* Detail View Container */
+.detail-view {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    display: flex;
-    background-color: #212121;
-    opacity: 0;
-    pointer-events: none;
+    pointer-events: none; /* Let clicks pass through to gallery when hidden */
     z-index: 10;
-    transition: opacity 0.5s ease;
 }
-.overlay.active {
-    opacity: 1;
-    pointer-events: all;
+
+.detail-view.active {
+    pointer-events: auto;
 }
-.overlay-left {
-    width: 50%;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-    background-color: #212121;
+
+/* Right-side text panel */
+.text-panel {
+    position: absolute;
+    right: -50vw; /* Hidden off-screen initially */
+    top: 0;
+    width: 50vw;
+    height: 100vh;
+    background-color: #252626; 
+    color: white;
+    box-sizing: border-box;
+    padding: 60px 40px;
+    transition: right 0.8s ease-in-out;
+    border-left: 1px solid #444; /* Slight divider */
+    overflow-y: auto;
 }
-.flying-img {
+
+.detail-view.active .text-panel {
+    right: 0;
+}
+
+/* The Clone Image that Animates */
+.animating-image {
     position: fixed;
+    z-index: 20;
     object-fit: cover;
-    z-index: 99;
-    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    /* CSS transitions for all changing properties */
+    transition: top 0.8s ease-in-out, 
+                left 0.8s ease-in-out, 
+                width 0.8s ease-in-out, 
+                height 0.8s ease-in-out, 
+                transform 0.8s ease-in-out;
 }
-.overlay-right {
-    width: 50%;
-    height: 100%;
-    padding: 40px;
-    color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    opacity: 0;
-    transform: translateX(30px);
-    transition: opacity 0.4s ease 0.3s, transform 0.4s ease 0.3s;
+
+/* End state of image applied via JS */
+.animating-image.expanded {
+    top: 0 !important;
+    left: 0 !important;
+    width: 50vw !important;
+    height: 100vh !important;
+    transform: rotate(-360deg) !important; /* 360 counterclockwise */
 }
-.overlay.active .overlay-right {
-    opacity: 1;
-    transform: translateX(0);
-}
+
+/* Close button styling */
 .close-btn {
     position: absolute;
     top: 20px;
-    right: 30px;
-    background: none;
-    border: none;
-    color: #888;
-    font-size: 2rem;
+    right: 20px;
+    background: transparent;
+    border: 1px solid white;
+    color: white;
+    font-size: 16px;
     cursor: pointer;
-    z-index: 100;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background 0.2s;
 }
+
 .close-btn:hover {
-    color: #fff;
+    background: white;
+    color: #252626;
 }
